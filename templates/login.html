@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    margin:0;
+    font-family:Segoe UI;
+    background: linear-gradient(135deg,#0ea5e9,#1d4ed8);
+
+    /* CENTER LAYOUT */
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    padding:20px;   /* IMPORTANT → prevents full stretch feel */
+    box-sizing:border-box;
+}
+
+/* SMALL FLOATING CARD */
+.card{
+    width:320px;               /* FIXED WIDTH (important) */
+    max-width:100%;            /* mobile safe */
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(18px);
+    border-radius:18px;
+    padding:25px;
+
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+
+    box-shadow:0 20px 40px rgba(0,0,0,0.35);
+
+    /* FLOAT EFFECT */
+    transform: translateY(0);
+    animation: floatIn 0.6s ease;
+}
+
+/* HEADER */
+.header{
+    text-align:center;
+    color:white;
+}
+
+.header h1{
+    font-size:20px;
+    margin:0;
+}
+
+.header p{
+    font-size:12px;
+    margin:5px 0 0 0;
+    color:#e0f2fe;
+}
+
+/* RULES */
+.rules{
+    background: rgba(0,0,0,0.25);
+    padding:10px;
+    border-radius:10px;
+    color:white;
+    font-size:12px;
+}
+
+/* FORM */
+form{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+/* INPUTS */
+input{
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    outline:none;
+    font-size:14px;
+}
+
+/* BUTTON */
+button{
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#111827;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:black;
+    transform:scale(1.03);
+}
+
+/* SIGNUP */
+.signup{
+    text-align:center;
+    color:white;
+    font-size:13px;
+}
+
+.signup a{
+    display:inline-block;
+    margin-top:5px;
+    padding:8px 12px;
+    background: rgba(255,255,255,0.2);
+    border-radius:8px;
+    text-decoration:none;
+    color:white;
+    transition:0.3s;
+}
+
+.signup a:hover{
+    background: rgba(255,255,255,0.35);
+}
+
+/* ANIMATION */
+@keyframes floatIn{
+    from{
+        opacity:0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to{
+        opacity:1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* MOBILE */
+@media(max-width:600px){
+    .card{
+        width:100%;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="header">
+        <h1>☁ Cloud Storage</h1>
+        <p>Secure • Fast • Reliable</p>
+    </div>
+
+    <div class="rules">
+        <b>⚠ Rules:</b>
+        <ul>
+            <li>Use valid email</li>
+            <li>Correct password required</li>
+            <li>Keep account safe</li>
+        </ul>
+    </div>
+
+    <form action="/login" method="POST">
+    <input id="email" type="email" name="email" placeholder="Email" required>
+    <input id="password" type="password" name="password" placeholder="Password" required>
+    <button type="submit">Login</button>
+</form>
+
+    <div class="signup">
+        <p>Don't have account?</p>
+        <a href="/register">Create Account</a>
+    </div>
+
+</div>
+
+</body>
+</html>

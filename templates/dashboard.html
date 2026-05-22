@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cloud Dashboard</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    margin:0;
+    font-family:Segoe UI;
+    background: linear-gradient(135deg,#0ea5e9,#1d4ed8);
+    overflow-x:hidden;
+}
+
+/* =========================
+   🌸 BACKGROUND FIX (LOW LAYER)
+========================= */
+.background{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+    pointer-events:none;
+}
+
+.background span{
+    position:absolute;
+    display:block;
+    width:20px;
+    height:20px;
+    background:rgba(255,255,255,0.2);
+    bottom:-150px;
+    border-radius:50%;
+    animation:move 12s linear infinite;
+}
+
+.background span:nth-child(1){left:10%; width:40px; height:40px;}
+.background span:nth-child(2){left:25%;}
+.background span:nth-child(3){left:40%; width:60px; height:60px;}
+.background span:nth-child(4){left:60%;}
+.background span:nth-child(5){left:75%; width:30px; height:30px;}
+.background span:nth-child(6){left:90%;}
+
+@keyframes move{
+    0%{transform:translateY(0) scale(1); opacity:1;}
+    100%{transform:translateY(-1000px) scale(0.5); opacity:0;}
+}
+
+/* =========================
+   TOPBAR (HIGH LAYER FIX)
+========================= */
+.topbar{
+    position:relative;
+    z-index:10; /* IMPORTANT FIX */
+    background:rgba(0,0,0,0.25);
+    backdrop-filter: blur(12px);
+    color:white;
+    padding:15px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+
+/* SEARCH */
+.search-box input{
+    padding:10px;
+    border:none;
+    border-radius:10px;
+    width:200px;
+    outline:none;
+}
+
+/* =========================
+   MENU FIX (HIGHEST LAYER)
+========================= */
+.menu-wrapper{
+    position:relative;
+    z-index:20;
+}
+
+.menu-btn{
+    font-size:26px;
+    color:white;
+    cursor:pointer;
+    padding:5px 10px;
+    user-select:none;
+}
+
+/* DROPDOWN FIX */
+.dropdown{
+    position:absolute;
+    right:0;
+    top:45px;
+    background:rgba(0,0,0,0.95);
+    backdrop-filter: blur(12px);
+    border-radius:10px;
+    min-width:160px;
+    display:none;
+    flex-direction:column;
+    overflow:hidden;
+    z-index:9999; /* 🔥 MAIN FIX */
+    box-shadow:0 10px 25px rgba(0,0,0,0.4);
+}
+
+.dropdown a{
+    color:white;
+    text-decoration:none;
+    padding:10px;
+    display:block;
+    font-size:14px;
+    transition:0.2s;
+}
+
+.dropdown a:hover{
+    background:rgba(255,255,255,0.1);
+}
+
+/* =========================
+   MAIN CONTENT
+========================= */
+.container{
+    position:relative;
+    z-index:5;
+    padding:20px;
+}
+
+/* STATS */
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat-box{
+    background:rgba(255,255,255,0.15);
+    backdrop-filter: blur(15px);
+    padding:15px;
+    border-radius:14px;
+    color:white;
+    text-align:center;
+}
+
+/* UPLOAD */
+.upload-box{
+    background:rgba(255,255,255,0.15);
+    backdrop-filter: blur(15px);
+    padding:20px;
+    border-radius:15px;
+    margin-bottom:20px;
+    color:white;
+}
+
+/* BUTTON */
+button{
+    padding:10px 15px;
+    border:none;
+    background:#111827;
+    color:white;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+/* GRID FIXED */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:15px;
+}
+
+/* FILE CARD */
+.file-card{
+    background:rgba(255,255,255,0.15);
+    backdrop-filter: blur(15px);
+    padding:15px;
+    border-radius:14px;
+    color:white;
+    min-height:120px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    word-break:break-all;
+}
+
+.actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+    margin-top:10px;
+}
+
+.actions a{
+    color:white;
+    text-decoration:none;
+    background:rgba(0,0,0,0.3);
+    padding:5px 10px;
+    border-radius:8px;
+    font-size:12px;
+}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+    .topbar{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .search-box input{
+        width:100%;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🌸 BACKGROUND (FIXED LAYER) -->
+<div class="background">
+    <span></span><span></span><span></span>
+    <span></span><span></span><span></span>
+</div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+    <h2>☁ Cloud Dashboard</h2>
+
+    <div class="search-box">
+        <input type="text" placeholder="Search files...">
+    </div>
+
+    <!-- MENU -->
+    <div class="menu-wrapper">
+        <div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+        <div id="dropdown" class="dropdown">
+            <a href="#">👤 Profile</a>
+            <a href="#">⚙ Settings</a>
+            <a href="/logout">🚪 Logout</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- STATS -->
+    <div class="stats">
+        <div class="stat-box">📁 Files <p>{{ files|length }}</p></div>
+        <div class="stat-box">☁ Storage <p>Cloud</p></div>
+        <div class="stat-box">🔐 Secure <p>Active</p></div>
+    </div>
+
+    <!-- UPLOAD -->
+    <div class="upload-box">
+        <h3>Upload File</h3>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+           <input type="file" name="file" id="fileInput" style="display:none">
+
+<button type="button" onclick="document.getElementById('fileInput').click()">
+    Choose File
+</button>
+
+<button type="submit">Upload</button>
+        </form>
+    </div>
+
+    <!-- FILES -->
+    <h3 style="color:white;">Your Files</h3>
+
+    <div class="grid">
+        {% for file in files %}
+        <div class="file-card">
+            📄 <b>{{ file[2] }}</b>
+
+            <div class="actions">
+                <a href="/download/{{ file[2] }}">Download</a>
+                <a href="/delete/{{ file[2] }}">Delete</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+function toggleMenu(){
+    const menu = document.getElementById("dropdown");
+    menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+}
+
+window.onclick = function(e){
+    if(!e.target.matches('.menu-btn')){
+        document.getElementById("dropdown").style.display = "none";
+    }
+}
+</script>
+
+</body>
+</html>
+```
